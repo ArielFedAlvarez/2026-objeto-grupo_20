@@ -1,0 +1,107 @@
+import solucion.*
+
+describe "guerreros" {
+
+    test "Despues de recibir un ataque, el guerrero atacado disminuye 
+    su energia en un 10% del potencial ofensivo del guerrero atacante" {
+
+        const goku = new Guerrero (
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 100
+        )
+        const vegeta = new Guerrero (
+        nivelEnergiaInicial = 5000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 5000
+        )
+
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(4990, vegeta.nivelEnergia())
+    } 
+
+    test "Al ser atacado, un guerrero aumenta su experiencia en un punto" {
+
+        const goku = new Guerrero (
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 100
+        )
+        const vegeta = new Guerrero (
+        nivelEnergiaInicial = 5000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 5000
+        )
+
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(1,vegeta.nivelExperiencia())
+    }
+
+    test "Cuando un guerrero come una semilla del ermitaño, su nivel de energía es restaurado al original" {
+
+        const goku = new Guerrero (
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 100
+        )
+        const vegeta = new Guerrero (
+        nivelEnergiaInicial = 5000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 5000
+        )
+
+        goku.atacarAGuerrero(vegeta)
+        vegeta.comerSemillaErmitanio()
+
+        assert.equals(5000,vegeta.nivelEnergia())
+    }
+    
+    test "Cuando la energia de un guerrero llega a cero, el mismo muere" {
+
+        const goku = new Guerrero (
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 100
+        )
+        const vegeta = new Guerrero (
+        nivelEnergiaInicial = 10,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 10
+        )
+
+        goku.atacarAGuerrero(vegeta)
+
+        assert.that(vegeta.estaMuerto())
+    }
+
+    test "La energia de un guerrero no baja mas alla de cero por mas que siga siendo atacado" {
+
+        const goku = new Guerrero (
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 100
+        )
+        const vegeta = new Guerrero (
+        nivelEnergiaInicial = 10,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 10
+        )
+
+        goku.atacarAGuerrero(vegeta)
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(0,vegeta.nivelEnergia())
+    }
+}
