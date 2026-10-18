@@ -9,13 +9,15 @@ describe "guerreros" {
         nivelEnergiaInicial = 1000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 100
+        nivelEnergia = 100,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
         const vegeta = new Guerrero (
         nivelEnergiaInicial = 5000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 5000
+        nivelEnergia = 5000,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
 
         goku.atacarAGuerrero(vegeta)
@@ -29,13 +31,15 @@ describe "guerreros" {
         nivelEnergiaInicial = 1000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 100
+        nivelEnergia = 100,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
         const vegeta = new Guerrero (
         nivelEnergiaInicial = 5000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 5000
+        nivelEnergia = 5000,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
 
         goku.atacarAGuerrero(vegeta)
@@ -49,13 +53,15 @@ describe "guerreros" {
         nivelEnergiaInicial = 1000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 100
+        nivelEnergia = 100,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
         const vegeta = new Guerrero (
         nivelEnergiaInicial = 5000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 5000
+        nivelEnergia = 5000,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
 
         goku.atacarAGuerrero(vegeta)
@@ -70,13 +76,15 @@ describe "guerreros" {
         nivelEnergiaInicial = 1000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 100
+        nivelEnergia = 100,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
         const vegeta = new Guerrero (
         nivelEnergiaInicial = 10,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 10
+        nivelEnergia = 10,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
 
         goku.atacarAGuerrero(vegeta)
@@ -90,18 +98,89 @@ describe "guerreros" {
         nivelEnergiaInicial = 1000,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 100
+        nivelEnergia = 100,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
         const vegeta = new Guerrero (
         nivelEnergiaInicial = 10,
         potencialOfensivo = 100,
         nivelExperiencia = 0,
-        nivelEnergia = 10
+        nivelEnergia = 10,
+        traje = new TrajeComun(porcentajeProteccion = 0)
         )
 
         goku.atacarAGuerrero(vegeta)
         goku.atacarAGuerrero(vegeta)
 
         assert.equals(0,vegeta.nivelEnergia())
+    }
+}
+
+describe "trajes" {
+
+    const goku = new Guerrero (
+    nivelEnergiaInicial = 1000,
+    potencialOfensivo = 100,
+    nivelExperiencia = 0,
+    nivelEnergia = 1000,
+    traje = new TrajeComun(porcentajeProteccion = 0)
+    )
+    const vegeta = new Guerrero (
+    nivelEnergiaInicial = 5000,
+    potencialOfensivo = 100,
+    nivelExperiencia = 0,
+    nivelEnergia = 5000,
+    traje = new TrajeComun(porcentajeProteccion = 3)
+    )
+
+    test "Un guerrero con un traje comun de 3% de proteccion recibe menos daño" {
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(4993, vegeta.nivelEnergia())
+    }
+
+    test "Con traje comun la experiencia aumenta en un punto al ser atacado" {
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(1, vegeta.nivelExperiencia())
+    }
+
+    test "Un traje de entrenamiento no disminuye el daño recibido" {
+        vegeta.cambiarTraje(new TrajeDeEntrenamiento())
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(4990, vegeta.nivelEnergia())
+    }
+
+    test "Con traje de entrenamiento la experiencia aumenta el doble al ser atacado" {
+        vegeta.cambiarTraje(new TrajeDeEntrenamiento())
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(2, vegeta.nivelExperiencia())
+    }
+
+    test "Si cambia el multiplicador de los trajes de entrenamiento cambia para todos" {
+        const gohan = new Guerrero (
+        nivelEnergiaInicial = 3000,
+        potencialOfensivo = 50,
+        nivelExperiencia = 0,
+        nivelEnergia = 3000,
+        traje = new TrajeDeEntrenamiento()
+        )
+        vegeta.cambiarTraje(new TrajeDeEntrenamiento())
+        trajesDeEntrenamiento.multiplicadorExperiencia(3)
+
+        goku.atacarAGuerrero(vegeta)
+        goku.atacarAGuerrero(gohan)
+
+        assert.equals(3, vegeta.nivelExperiencia())
+        assert.equals(3, gohan.nivelExperiencia())
+    }
+
+    test "Un guerrero puede cambiar de traje antes de una pelea" {
+        const trajeNuevo = new TrajeDeEntrenamiento()
+        vegeta.cambiarTraje(trajeNuevo)
+
+        assert.equals(trajeNuevo, vegeta.traje())
     }
 }
