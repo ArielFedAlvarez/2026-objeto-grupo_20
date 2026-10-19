@@ -50,3 +50,21 @@ class TrajeDeEntrenamiento {
 object trajesDeEntrenamiento {
     var property multiplicadorExperiencia = 2
 }
+class Piezas {
+    const property resistencia
+    var property desgaste = 0
+    
+    method estaGastada()= desgaste >= 20
+}
+class TrajeModularizado {
+    const piezas
+    method gastado() = piezas
+            .all { pieza => pieza.estaGastada() }
+    method proteccion(potencialDelAtacante) =
+        piezas
+            .filter({ pieza => !pieza.estaGastada() })
+            .sum({ pieza => pieza.resistencia() })
+        
+    method experienciaGanada() =
+    piezas.count({ pieza => !pieza.estaGastada() }) / piezas.size()
+}

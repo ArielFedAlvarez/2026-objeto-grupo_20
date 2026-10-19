@@ -184,3 +184,82 @@ describe "trajes" {
         assert.equals(trajeNuevo, vegeta.traje())
     }
 }
+describe "trajes modularizados" {
+
+    test "La proteccion suma la resistencia de las piezas no gastadas" {
+        const pieza1 = new Piezas(resistencia = 1)
+        const pieza2 = new Piezas(resistencia = 4)
+        const traje = new TrajeModularizado(
+            piezas = [pieza1, pieza2]
+        )
+
+        assert.equals(5, traje.proteccion(100))
+    }
+
+    test "Una pieza esta gastada cuando llega a 20 de desgaste" {
+        const pieza = new Piezas(resistencia = 3)
+
+        pieza.desgaste(20)
+
+        assert.that(pieza.estaGastada())
+    }
+
+    test "Un traje modularizado esta gastado si todas sus piezas estan gastadas" {
+        const pieza1 = new Piezas(resistencia = 1)
+        const pieza2 = new Piezas(resistencia = 4)
+
+        pieza1.desgaste(20)
+        pieza2.desgaste(20)
+
+        const traje = new TrajeModularizado(
+            piezas = [pieza1, pieza2]
+        )
+
+        assert.that(traje.gastado())
+    }
+
+    test "La experiencia aumenta segun el porcentaje de piezas no gastadas" {
+        const pieza1 = new Piezas(resistencia = 1)
+        const pieza2 = new Piezas(resistencia = 4)
+        const pieza3 = new Piezas(resistencia = 2)
+        const pieza4 = new Piezas(resistencia = 3)
+
+        pieza1.desgaste(20)
+        pieza2.desgaste(20)
+
+        const traje = new TrajeModularizado(
+            piezas = [pieza1, pieza2, pieza3, pieza4]
+        )
+
+        assert.equals(0.5, traje.experienciaGanada())
+    }
+
+    test "Un guerrero con traje modularizado recibe menos daño" {
+    const pieza1 = new Piezas(resistencia = 1)
+    const pieza2 = new Piezas(resistencia = 4)
+
+    const traje = new TrajeModularizado(
+        piezas = [pieza1, pieza2]
+    )
+
+    const goku = new Guerrero(
+        nivelEnergiaInicial = 1000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 1000,
+        traje = new TrajeComun(porcentajeProteccion = 0)
+    )
+
+    const vegeta = new Guerrero(
+        nivelEnergiaInicial = 5000,
+        potencialOfensivo = 100,
+        nivelExperiencia = 0,
+        nivelEnergia = 5000,
+        traje = traje
+    )
+
+    goku.atacarAGuerrero(vegeta)
+
+    assert.equals(4995, vegeta.nivelEnergia())
+    }
+}
