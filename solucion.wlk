@@ -4,7 +4,7 @@ class Guerrero {
     var nivelExperiencia
     var nivelEnergia
     var traje
-    var factorDisminucionEnergiaTrasAtaque = 0.1
+    const factorDisminucionEnergiaTrasAtaque = 0.1
 
     method nivelEnergia() = nivelEnergia
 
@@ -13,6 +13,10 @@ class Guerrero {
     method traje() = traje
 
     method estaMuerto() = nivelEnergia == 0
+
+    method potencialOfensivo() = potencialOfensivo
+
+    method cantidadPiezasTraje() = traje.cantidadPiezas()
 
     method cambiarTraje(nuevoTraje) {
         traje = nuevoTraje
@@ -39,12 +43,17 @@ class TrajeComun {
     method proteccion(potencialDelAtacante) = potencialDelAtacante * porcentajeProteccion / 100
 
     method experienciaGanada() = 1
+
+    method cantidadPiezas() = 1
 }
 
 class TrajeDeEntrenamiento {
     method proteccion(potencialDelAtacante) = 0
 
     method experienciaGanada() = trajesDeEntrenamiento.multiplicadorExperiencia()
+
+    method cantidadPiezas() = 1
+
 }
 
 object trajesDeEntrenamiento {
@@ -58,8 +67,12 @@ class Piezas {
 }
 class TrajeModularizado {
     const piezas
+
+    method piezas() = piezas
+
     method gastado() = piezas
             .all { pieza => pieza.estaGastada() }
+
     method proteccion(potencialDelAtacante) =
         piezas
             .filter({ pieza => !pieza.estaGastada() })
@@ -67,4 +80,41 @@ class TrajeModularizado {
         
     method experienciaGanada() =
     piezas.count({ pieza => !pieza.estaGastada() }) / piezas.size()
+
+    method cantidadPiezas() = piezas.size()
 }
+
+class Modalidad {
+    const cantidadPeleadores 
+    method seleccionar(peleadores) = peleadores.take(cantidadPeleadores)
+}
+
+class PowerIsBest inherits Modalidad {
+    override method seleccionar(peleadores) = peleadores.sortedBy({ a, b => a.potencialOfensivo() > b.potencialOfensivo() }).take(cantidadPeleadores)
+}
+
+class Funny inherits Modalidad {
+    override method seleccionar(peleadores) = peleadores.sortedBy({ a, b => a.cantidadPiezasTraje() > b.cantidadPiezasTraje() }).take(cantidadPeleadores)
+}
+
+class Surprise inherits Modalidad {
+    override method seleccionar(peleadores) = peleadores.randomized().take(cantidadPeleadores)
+}
+
+class Torneo {
+    const participantes = []
+    var modalidad 
+    method participantes() = participantes
+
+    method cambiarModalidad(nueva) { modalidad=nueva}
+
+    method inscripcion(peleadores) {
+        participantes.addAll(modalidad.seleccionar(peleadores))
+    }
+}
+
+
+
+
+
+

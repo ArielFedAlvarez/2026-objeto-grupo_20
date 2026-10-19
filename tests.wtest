@@ -263,3 +263,167 @@ describe "trajes modularizados" {
     assert.equals(4995, vegeta.nivelEnergia())
     }
 }
+describe "torneos" {
+
+    test "Un torneo de modalidad PowerIsBest selecciona a los guerreros con mayor potencial ofensivo" {
+        const torneo = new Torneo(modalidad = null)
+        const powerIsBest = new PowerIsBest(cantidadPeleadores = 16)
+        const goku = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku2 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku3 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku4 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku5 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku6 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku7 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku8 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku9 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku10 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku11 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku12 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku13 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku14 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const goku15 = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const vegeta = new Guerrero (
+            nivelEnergiaInicial = 5000,
+            potencialOfensivo = 200,
+            nivelExperiencia = 0,
+            nivelEnergia = 5000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const gohan = new Guerrero (
+            nivelEnergiaInicial = 3000,
+            potencialOfensivo = 50,
+            nivelExperiencia = 0,
+            nivelEnergia = 3000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         ) 
+        torneo.cambiarModalidad(powerIsBest)
+        torneo.inscripcion([goku,goku2,goku3,goku4,goku5,goku6,goku7,goku8,goku9,goku10,goku11,goku12,goku13,goku14,goku15, gohan , vegeta ])
+
+        assert.equals([vegeta,goku,goku2,goku3,goku4,goku5,goku6,goku7,goku8,goku9,goku10,goku11,goku12,goku13,goku14,goku15 ], torneo.participantes())
+    }
+    test "Un torneo de modalidad Funny selecciona a los guerreros con mayor cantidad de piezas en su traje" {
+        const torneo = new Torneo(modalidad = null)
+        const funny = new Funny(cantidadPeleadores = 2)
+        const goku = new Guerrero (
+            nivelEnergiaInicial = 1000,
+            potencialOfensivo = 100,
+            nivelExperiencia = 0,
+            nivelEnergia = 1000,
+            traje = new TrajeComun(porcentajeProteccion = 0)
+         )
+        const vegeta = new Guerrero (
+            nivelEnergiaInicial = 5000,
+            potencialOfensivo = 200,
+            nivelExperiencia = 0,
+            nivelEnergia = 5000,
+            traje = new TrajeModularizado(
+                piezas = [new Piezas(resistencia=1), new Piezas(resistencia=2)]
+            )
+         )
+        const gohan = new Guerrero (
+            nivelEnergiaInicial = 3000,
+            potencialOfensivo = 50,
+            nivelExperiencia = 0,
+            nivelEnergia = 3000,
+            traje = new TrajeModularizado(
+                piezas = [new Piezas(resistencia=1), new Piezas(resistencia=2), new Piezas(resistencia=3)]
+            )
+         ) 
+        torneo.cambiarModalidad(funny)
+        torneo.inscripcion([goku, vegeta, gohan])
+
+        assert.equals([gohan, vegeta], torneo.participantes())
+    }
+    
+}
