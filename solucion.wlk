@@ -30,6 +30,7 @@ class Guerrero {
         const danioRecibido = (factorDisminucionEnergiaTrasAtaque * potencialDelAtacante) - traje.proteccion(potencialDelAtacante)
         nivelEnergia = 0.max(nivelEnergia - danioRecibido)
         nivelExperiencia += traje.experienciaGanada()
+        traje.desgastar()
     }
 
     method comerSemillaErmitanio() {
@@ -39,6 +40,13 @@ class Guerrero {
 
 class TrajeComun {
     const porcentajeProteccion
+    var property desgaste = 0
+
+    method desgastar() {
+        desgaste += 5
+    }
+
+    method gastado() = desgaste >= 100
 
     method proteccion(potencialDelAtacante) = potencialDelAtacante * porcentajeProteccion / 100
 
@@ -48,6 +56,14 @@ class TrajeComun {
 }
 
 class TrajeDeEntrenamiento {
+    var property desgaste = 0
+
+    method desgastar() {
+        desgaste += 5
+    }
+
+    method gastado() = desgaste >= 100
+
     method proteccion(potencialDelAtacante) = 0
 
     method experienciaGanada() = trajesDeEntrenamiento.multiplicadorExperiencia()
