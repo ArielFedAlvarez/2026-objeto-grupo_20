@@ -183,6 +183,30 @@ describe "trajes" {
 
         assert.equals(trajeNuevo, vegeta.traje())
     }
+
+    test "Cada vez que atacan a un guerrero, el desgaste de su traje aumenta en 5 unidades" {
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(5, vegeta.traje().desgaste())
+    }
+
+    test "Un traje esta gastado cuando su desgaste llega a 100 unidades" {
+        const trajeGastado = new TrajeComun(porcentajeProteccion = 3, desgaste = 95)
+        vegeta.cambiarTraje(trajeGastado)
+
+        goku.atacarAGuerrero(vegeta)
+
+        assert.that(trajeGastado.gastado())
+    }
+
+    test "Cuando un traje esta gastado ya no protege al guerrero" {
+        const trajeGastado = new TrajeComun(porcentajeProteccion = 3, desgaste = 100)
+        vegeta.cambiarTraje(trajeGastado)
+
+        goku.atacarAGuerrero(vegeta)
+
+        assert.equals(4990, vegeta.nivelEnergia())
+    }
 }
 describe "trajes modularizados" {
 
