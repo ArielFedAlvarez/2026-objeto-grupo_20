@@ -48,7 +48,7 @@ class TrajeComun {
 
     method gastado() = desgaste >= 100
 
-    method proteccion(potencialDelAtacante) = potencialDelAtacante * porcentajeProteccion / 100
+    method proteccion(potencialDelAtacante) = if (self.gastado()) 0 else potencialDelAtacante * porcentajeProteccion / 100
 
     method experienciaGanada() = 1
 
